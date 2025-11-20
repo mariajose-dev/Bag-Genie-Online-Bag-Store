@@ -5,3 +5,11 @@
 
 # Force Python detection
 *.py linguist-language=Python
+
+# Increase Python weight
+*.py linguist-weight=10
+
+# Keep HTML/CSS/JS visible but low weight
+*.html linguist-weight=1
+*.css  linguist-weight=1
+*.js   linguist-weight=1
