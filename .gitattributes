@@ -1,8 +1,11 @@
-# Increase Python weight (dominant)
+# Strongly boost Python
 *.py linguist-weight=10
 
-# Lower weight for frontend files, but still detectable
-*.html linguist-weight=2
-*.css  linguist-weight=2
-*.js   linguist-weight=2
+# Slightly reduce HTML weight
+*.html linguist-weight=1
+
+# Keep CSS/JS normal
+*.css linguist-weight=2
+*.js  linguist-weight=2
+
 
