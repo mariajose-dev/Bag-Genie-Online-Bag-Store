@@ -1,11 +1,9 @@
-# Strongly boost Python
-*.py linguist-weight=10
+# Reduce weight of HTML/CSS/JS
+*.html linguist-detectable=false
+*.css linguist-detectable=false
+*.js linguist-detectable=false
 
-# Slightly reduce HTML weight
-*.html linguist-weight=1
-
-# Keep CSS/JS normal
-*.css linguist-weight=2
-*.js  linguist-weight=2
+# Force Python detection
+*.py linguist-language=Python
 
 
