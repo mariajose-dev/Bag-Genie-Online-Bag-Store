@@ -1,15 +1,8 @@
-# Reduce weight of HTML/CSS/JS
-*.html linguist-detectable=false
-*.css linguist-detectable=false
-*.js linguist-detectable=false
-
-# Force Python detection
-*.py linguist-language=Python
-
-# Increase Python weight
+# Increase Python weight (dominant)
 *.py linguist-weight=10
 
-# Keep HTML/CSS/JS visible but low weight
-*.html linguist-weight=1
-*.css  linguist-weight=1
-*.js   linguist-weight=1
+# Lower weight for frontend files, but still detectable
+*.html linguist-weight=2
+*.css  linguist-weight=2
+*.js   linguist-weight=2
+
