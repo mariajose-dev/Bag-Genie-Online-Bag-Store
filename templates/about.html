@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "partials/head.html" %}
+    <style>
+        /* About section styles */
+        @keyframes colorChange {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.about-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: colorChange 15s ease infinite;
+    text-align: center;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.about-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    color: #ffdd57;
+}
+
+.about-section .intro {
+    font-size: 1.3rem;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+    font-weight: 300;
+    color: #f3f3f3;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.our-values {
+    margin-bottom: 3rem;
+    
+    /*background: lightseagreen;*/
+    padding: 2rem;
+    border-radius: 15px;
+    /*box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);*/
+    backdrop-filter: blur(10px);
+    margin: auto;
+}
+
+.our-values ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.our-values h1 {
+    color: #ffdd57; 
+}
+
+.our-values li {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.our-values li strong {
+    color: #ffdd57; 
+}
+
+.cta-section {
+    background-color: #bda7de;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    max-width: 800px;
+    margin: auto;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+.cta-section a.btn {
+    display: inline-block;
+    background-color: white;
+    color: #e73c7e;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cta-section a.btn:hover {
+    background-color: #e73c7e;
+    color: white;
+    transform: scale(1.08);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+    </style>
+</head>
+<body>
+  {% include "partials/header.html" %}
+    <main>
+        <section class="about-section">
+            <div class="container">
+                <h1>About Us</h1>
+                <p class="intro">Bag Genie is your one-stop destination for stylish and functional bags. We're passionate about providing high-quality bags that meet your everyday needs and express your unique style.</p>
+                
+                
+                <div class="our-values">
+                    <h1>Our Values</h1>
+                    <ul>
+                        <li><strong>Quality:</strong> We source only the finest materials and partner with skilled artisans to ensure each bag meets our high standards.</li>
+                        <li><strong>Style:</strong> Our designs blend timeless elegance with contemporary trends, ensuring you always look your best.</li>
+                        <li><strong>Functionality:</strong> We understand the importance of practicality in everyday life, so our bags are designed with your needs in mind.</li>
+                        <li><strong>Sustainability:</strong> We're committed to reducing our environmental impact by using eco-friendly materials and ethical production processes.</li>
+                    </ul>
+                </div>
+                <br>
+                
+            </div>
+        </section>
+    </main>
+    {% include "partials/footer.html" %}
+</body>
+</html>

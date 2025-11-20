@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "partials/head.html" %}
+<head><style>
+    /* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #5a4632; /* Warm brown */
+    margin-bottom: 20px;
+}
+
+/* Category Grid */
+.category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Category Card */
+.category-card {
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+}
+
+/* Circular Category Image */
+.category-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ffffff; /* White background */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Category Name */
+.category-name {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #5a4632; /* Warm brown */
+}
+a {
+    text-decoration: none; /* Remove underline for all links */
+    color: inherit; /* Inherits color from parent */
+}
+</style></head>
+<body>
+    {% include "partials/header.html" %}
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Welcome to Bag Genie</h1>
+                <p>Your bag wishes, granted!</p>
+                <a href="/products" class="btn">Start Shopping</a>
+            </div>
+        </section>
+    <!--    <section class="featured-products">
+            <div class="container">
+                <h2>Featured Bags</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/static/images/tote.webp" alt="Elegant Tote" />
+                        </div>
+                        <h3>Elegant Tote</h3>
+                        <p>Perfect for everyday use</p>
+                        <a href="#" class="btn-secondary">View Details</a>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/static/images/backpack.webp" alt="Adventure Backpack" />
+                        </div>
+                        <h3>Adventure Backpack</h3>
+                        <p>For your outdoor escapades</p>
+                        <a href="#" class="btn-secondary">View Details</a>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/static/images/clutch.webp" alt="Chic Clutch" />
+                        </div>
+                        <h3>Chic Clutch</h3>
+                        <p>Elevate your evening look</p>
+                        <a href="#" class="btn-secondary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>-->
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title">Featured Categories</h2>
+                <div class="category-grid">
+                    {% for category in categories %}
+                    <a href="{{ url_for('category_details', cat_id=category['Cat_id']) }}" class="category-card">
+                        <div class="category-image">
+                            <img src="data:image/jpeg;base64,{{ category['Cat_image'] }}" alt="{{ category['Cat_name'] }}" />
+                        </div>
+                        <p class="category-name">{{ category['Cat_name'] }}</p>
+                    </a>
+                    {% endfor %}
+                </div>
+                
+            </div>
+        </section>
+        
+    </main>
+    {% include "partials/footer.html" %}
+</body>
+</html>

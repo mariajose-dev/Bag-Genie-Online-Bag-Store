@@ -1,0 +1,248 @@
+:root {
+    --primary-color: #400969;
+    --secondary-color: #8a2be2;
+    --accent-color: #ffd700;
+    --background-color: #bda7de;
+    --text-color: #333;
+  }
+  
+  body {
+    /*background-color: var(--primary-color);*/
+    background-image: url('/static/images/bag\ wallpaper\ admin\ and\ staff.jpg');
+    background-size: 100% 100%; /* Ensures the image covers the entire viewport */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents image repetition */
+    background-attachment: fixed; /* Keeps the image fixed when scrolling (optional) */
+    color: var(--text-color);
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #bda7de;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(64, 9, 105, 0.2);
+    padding-bottom: 40px;
+  }
+  
+  .admin-dashboard {
+    margin: 25px 20px 20px;
+  }
+  
+  .admin-dashboard a {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--secondary-color);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .admin-dashboard a:hover {
+    background: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(64, 9, 105, 0.3);
+  }
+  
+  .form-container {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    color: #fff;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .form-group input[type="email"]{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    background-color: #bda7de;
+  }
+  .form-group select{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    background-color: #bda7de;
+  }
+
+  .form-group input[type="text"],.form-group input[type="number"],.form-group input[type="date"],
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    background-color: #bda7de;
+  }
+
+  .form-group input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input[type="text"]:focus,.form-group select:focus,.form-group input[type="email"]:focus,
+  .form-group input[type="number"]:focus,.form-group input[type="date"]:focus,.form-group input[type="date"]:focus,
+  .form-group textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-color);
+  }
+  
+  .table-image {
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .table-image:hover {
+    transform: scale(1.1);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 30px;
+    background: transparent;
+  }
+  
+  th,
+  td {
+    padding: 15px;
+    text-align: left;
+    border: none;
+    background-color:#bda7de; ;
+  }
+  
+  th {
+    background-color: var(--primary-color);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  tr {
+    transition: all 0.3s ease;
+  }
+  
+  tr:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(64, 9, 105, 0.1);
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    background-color: var(--accent-color);
+  }
+  
+  button[type="submit"] {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+  }
+  
+  button[type="submit"]:hover {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+  }
+  
+  .success {
+    background-color: #4caf50;
+    color: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .danger {
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .deactivate {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .activate {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .deactivate:hover,
+  .activate:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Add some bag-themed elements */
+  .bag-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-5-2v2H9V4h6zM4 8h16v3H4V8zm0 5h16v7H4v-7z"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  
+  .form-container::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="%23FFFFFF20"><path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-5-2v2H9V4h6zM4 8h16v3H4V8zm0 5h16v7H4v-7z"/></svg>');
+    opacity: 0.1;
+    z-index: -1;
+  }
+  
+  

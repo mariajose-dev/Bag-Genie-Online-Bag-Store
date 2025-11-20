@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "partials/head.html" %}
+    <style>
+        .dashboard {
+            padding: 2rem 0;
+            background: #c3cfe2;
+        }
+
+        .dashboard h1 {
+            text-align: center;
+            color: #4a0e78;
+            margin-bottom: 2rem;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .card {
+            background: linear-gradient(to right, #7b2cbf, #4a0e78);
+            color: #fff;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: 30px;
+            margin-bottom: 1rem;
+        }
+
+        .card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo-container" style="display: flex; align-items: center;">
+                <img src="/static/images/bag genie new.jpg" height="40" width="40" alt="Bag Genie Logo" class="logo-image"> 
+                <div class="logo" style="margin-left: 10px;">Bag Genie(Admin Dashboard)</div>
+            </div>
+            <div>
+                <a href="/" class="logout-button" style="text-decoration: none;">
+                    <button style="background-color: red; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                        Logout
+                    </button>
+                </a>
+            </div>
+        </div>
+    </header>
+    
+
+<div class="dashboard">
+    <h1>Welcome, Admin!</h1>
+    <div class="card-container">
+        <a href="{{ url_for('staff_management') }}" class="card">
+            <p style="font-size: 50px;">&#129489;&#8205;&#128188;</p>
+            <h2>Staff Management</h2>
+            <p>{{ staff_count - 1 }}</p>
+        </a>
+        <a href="/customermanagement" class="card">
+            <p style="font-size: 50px;">&#128100;</p>
+            <h2>Customer Management</h2>
+            <p>{{ customer_count }}</p>
+        </a>      
+        <a href="{{ url_for('courier_management') }}" class="card">
+            <p style="font-size: 50px;">&#128230;</p>
+            <h2>Courier Management</h2>
+            <p>{{ courier_count }}</p>
+        </a>
+        <a href="/vendor_management" class="card">
+            <p style="font-size: 50px;">🏢🤝</p>
+            <h2>Vendor Management</h2>
+            <p>{{ vendor_count }}</p>
+        </a>
+     <!-- <a href="product_management.html" class="card">
+            <i>&#128722;</i>
+            <h2>Product Management</h2>
+        </a>
+        -->   
+        
+    </div><br>
+        <div class="card-container">
+            
+        <a href="{{ url_for('category_management') }}" class="card">
+            <p style="font-size: 50px;">&#128194;</p>
+            <h2>Category Management</h2>
+            <p>{{ category_count }}</p>
+        </a>
+        <a href="/subcategory_management" class="card">
+            <p style="font-size: 50px;">&#128240;</p>
+            <h2>Subcategory Management</h2>
+            <p>{{ subcategory_count }}</p>
+        </a>
+        <a href="/item_management" class="card">
+            <p style="font-size: 50px;">👜👝🎒</p>
+            <h2>Item Management</h2>
+            <p>{{ item_count }}</p>
+        </a>
+        <a href="/purchase_management" class="card">
+            <p style="font-size: 50px;">🛍️</p>
+            <h2>Purchase Management</h2>
+            <p>{{purchase_count}}</p>
+        </a>
+        
+            
+        
+    </div><br>
+    <div class="card-container">
+        <a href="{{ url_for('admin_reports_route') }}" class="card">
+            <h2>Reports</h2>
+            <p style="font-size: 50px;">📋</p>
+        </a>
+    </div>
+
+    
+</div>
+
+{% include "partials/footer.html" %}
+
+</body>
+</html>

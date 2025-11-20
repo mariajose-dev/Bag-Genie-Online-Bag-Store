@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "partials/head.html" %}
+<body>
+    {% include "partials/header.html" %}<br>
+    <div class="container">
+        <section class="signup-form">
+                <form action="/customer_signup" method="POST">
+                    <h1>Customer Registration Form</h1>
+                    <!-- Display all errors at the top -->
+                    {% if errors %}
+                        <div class="error-messages">
+                            <ul>
+                                {% for field, message in errors.items() %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                <label for="username">Email:</label>
+                <!-- Display username (readonly) -->
+                <input type="text" name="username" value="{{ username }}" readonly>
+        
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="fname" required>
+        
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lname" required>
+        
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+        
+                <label for="district">District:</label>
+                <input type="text" id="district" name="district" required>
+        
+                <label for="pin">Pin Code:</label>
+                <input type="text" id="pin" name="pin" maxlength="6" pattern="\d{6}" required>
+        
+                <label for="street">Street Name:</label>
+                <input type="text" id="street" name="street" required>
+        
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" maxlength="10" pattern="\d{10}" required>
+        
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+        
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                </select>
+
+                <!-- Add this before the Sign Up button in customer_signup.html -->
+                <label for="security_answer">Security Question: What is your Favorite Food?</label>
+                <input type="text" id="security_answer" name="security_answer" maxlength="20" required placeholder="in 1 word">
+
+                <!-- Message below the input field -->
+                <p style="font-size: 0.9em; color: red;">Please remember your answer, as it will be asked in the future to prove authentication.</p>
+        
+                <button type="submit">Sign Up</button>
+            </form>
+        </section>
+    </div>
+
+<style>
+            body {
+            background: url('/static/images/wallpapperloginpage.jpeg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            background: #bda7de;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 700px;
+        }
+
+        input,select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid black;
+            border-radius: 5px;
+            background: #bda7de;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+    .error-messages {
+        background-color: #fdd;
+        border: 1px solid red;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+    .error-messages ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .error-messages li {
+        color: red;
+        font-size: 0.9em;
+        margin: 5px 0;
+    }
+</style><br>
+{% include "partials/footer.html" %}
+</body>
+</html>

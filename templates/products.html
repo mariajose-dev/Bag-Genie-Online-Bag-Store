@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "partials/head.html" %}
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Your header styles */
+        header {
+            background-color: #400969;
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .bcontainer {
+            display: flex;
+            padding: 20px;
+        }
+        .filter-container {
+            width: 21%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .filter-container h3 {
+            margin-top: 0;
+        }
+    /*    .filter-container label {
+            display: block;
+            margin: 10px 0;
+        }*/
+        .filter-container input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .filter-container .price-slider {
+            margin: 20px 0;
+        }
+        .filter-container button {
+            background-color: #d4a373;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .item-grid {
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 20px;
+            padding-left: 20px;
+            height: fit-content;
+        }
+        .item-card {
+            text-decoration: none;
+            color: black;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .image-container {
+            height: 200px;
+            overflow: hidden;
+        }
+        .item-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .item-details {
+            padding: 10px;
+        }
+        .item-name {
+            margin: 0;
+            font-size: 18px;
+        }
+        .item-price {
+            margin: 5px 0;
+            color: #d4a373;
+            font-size: 16px;
+        }
+        .item-weight {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .view-button {
+            display: inline-block;
+            background-color: #8b5e3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .hidden {
+            display: none;
+        }
+
+        .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-header h3 {
+    margin: 0;
+}
+
+.remove-all {
+    text-decoration: none;
+    color: #d4a373;
+    font-size: 14px;
+}
+.item-name-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.rating-display {
+    margin-left: 5px;
+    font-size: 14px;
+}
+.rating-star {
+    color: gold;
+}
+    </style>
+</head>
+<body>
+    {% include "partials/header.html" %}
+    <div class="bcontainer">
+        <div class="filter-container">
+            <div class="filter-header">
+            <h3>FILTER</h3>
+            <a href="{{ url_for('products') }}" style="text-decoration: none; color: #d4a373;">Remove all</a>
+            </div>
+            <h4>Category</h4>
+            {% for category in categories %}
+                <label>
+                    <input type="checkbox" 
+                           class="category-checkbox" 
+                           name="category" 
+                           value="{{ category['Cat_id'] }}" 
+                           {% if 'category' in filters and category['Cat_id']|string in filters['category'].split(',') %}checked{% endif %}>
+                    {{ category['Cat_name'] }}
+                </label>
+            {% endfor %}
+            
+            <h4>Subcategories</h4>
+            <div id="subcategory-container">
+                {% for category in categories %}
+                    <div id="subcats-{{ category['Cat_id'] }}" class="subcategory-group hidden">
+                        {% if category['Cat_id'] in category_subcat_map %}
+                            {% for subcat in category_subcat_map[category['Cat_id']] %}
+                                <label>
+                                    <input type="checkbox" 
+                                           name="subcategory" 
+                                           value="{{ subcat|escape }}"
+                                           {% if 'subcategory' in filters %}
+                                               {% set subcat_list = filters['subcategory'].split(',')|map('trim')|list %}
+                                               {% if subcat in subcat_list %}checked{% endif %}
+                                           {% endif %}>
+                                    {{ subcat }}
+                                </label>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <h4>Colors</h4>
+            <label><input type="checkbox" name="color" value="Pink"> Pink</label>
+            <label><input type="checkbox" name="color" value="Beige"> Beige</label>
+            <label><input type="checkbox" name="color" value="Red"> Red</label>
+            <label><input type="checkbox" name="color" value="Black"> Black</label>
+            <label><input type="checkbox" name="color" value="Brown"> Brown</label>
+
+
+            
+            <h4>Price</h4>
+            <input type="range" id="priceRange" name="price_max" min="0" max="3000" value="{{ filters.get('price_max', 3000) }}" oninput="updatePriceValue()">
+            <p id="priceValue">Price: Rs. 0 - Rs. {{ filters.get('price_max', 3000) }}</p>
+            
+            <button onclick="applyFilters()">Apply Filters</button>
+        </div>
+        <div class="item-grid">
+            {% for item in items %}
+            <a href="{{ url_for('item_details', item_id=item['Item_id']) }}" class="item-card">
+                <div class="image-container">
+                    <img src="data:image/jpeg;base64,{{ item['Item_image'] if item['Item_image'] else '' }}" alt="{{ item['Item_name'] }}" class="item-image" />
+                </div>
+                <div class="item-details">
+                    <div class="item-name-container">
+                        <p class="item-name">{{ item['Item_name'] }}</p>
+                        <span class="rating-display">
+                          ({{ '{:.1f}'.format(item['avg_rating']) }} <span class="rating-star">★</span> · {{ item['review_count'] }} {{ 'reviews' if item['review_count'] != 1 else 'review' }})
+                        </span>
+                      </div>
+                    <p class="item-price">₹{{ '{:.2f}'.format(item['Sell_price']) }}</p>
+                    <span class="view-button">View Details</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        // Function to initialize the page
+        function initPage() {
+            // Update price value display
+            updatePriceValue();
+            
+            // Setup category checkbox event listeners
+            setupCategoryCheckboxes();
+            
+            // Show subcategories for pre-selected categories on page load
+            showInitialSubcategories();
+        }
+        
+        // Function to update price value display
+        function updatePriceValue() {
+            const slider = document.getElementById('priceRange');
+            const value = document.getElementById('priceValue');
+            value.textContent = `Price: Rs. 0 - Rs. ${slider.value}`;
+        }
+        
+        // Function to setup category checkbox event listeners
+        function setupCategoryCheckboxes() {
+            document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // If this checkbox is being checked, show its subcategories
+                    const catId = this.value;
+                    const subcatGroup = document.getElementById(`subcats-${catId}`);
+                    
+                    if (this.checked && subcatGroup) {
+                        subcatGroup.classList.remove('hidden');
+                    } else if (subcatGroup) {
+                        subcatGroup.classList.add('hidden');
+                        // Uncheck all subcategories in this group when the category is unchecked
+                        subcatGroup.querySelectorAll('input[type="checkbox"]').forEach(subCheck => {
+                            subCheck.checked = false;
+                        });
+                    }
+                });
+            });
+        }
+        
+        /*
+        // Function to show subcategories for pre-selected categories
+        function showInitialSubcategories() {
+            {% if 'category' in filters and filters['category'] %}
+                const initialCategories = "{{ filters['category'] }}".split(',');
+                initialCategories.forEach(catId => {
+                    if (catId.trim()) {
+                        const initialGroup = document.getElementById(`subcats-${catId.trim()}`);
+                        if (initialGroup) {
+                            initialGroup.classList.remove('hidden');
+                        }
+                    }
+                });
+            {% endif %}
+        }*/
+        
+        // Function to apply filters
+        function applyFilters() {
+            const categoryCheckboxes = document.querySelectorAll('input[name="category"]:checked');
+            const subcategoryCheckboxes = document.querySelectorAll('input[name="subcategory"]:checked');
+            const priceRange = document.getElementById('priceRange').value;
+            const colorCheckboxes = document.querySelectorAll('input[name="color"]:checked');
+            
+            const params = new URLSearchParams();
+            
+            // Add categories
+            const categories = Array.from(categoryCheckboxes).map(cb => cb.value);
+            if (categories.length > 0) {
+                params.append('category', categories.join(','));
+            }
+            
+            // Add subcategories
+            const subcategories = Array.from(subcategoryCheckboxes).map(cb => cb.value);
+            if (subcategories.length > 0) {
+                params.append('subcategory', subcategories.join(','));
+            }
+
+            // Add colors
+    const colors = Array.from(colorCheckboxes).map(cb => cb.value);
+    if (colors.length > 0) {
+        params.append('color', colors.join(','));
+    }
+            
+            // Add price
+            params.append('price_max', priceRange);
+            
+            // Redirect with params
+            window.location.href = "{{ url_for('products') }}?" + params.toString();
+        }
+        
+        // Initialize the page when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+    {% include "partials/footer.html" %}
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'932cd161194d7ea3',t:'MTc0NTA3MDA3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

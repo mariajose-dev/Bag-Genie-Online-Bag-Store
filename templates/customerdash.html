@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "partials/head.html" %}
+    <style>
+        .dashboard {
+            padding: 2rem 0;
+            background: #c3cfe2;
+            min-height: 100vh;
+        }
+
+        .dashboard h1 {
+            text-align: center;
+            color: #4a0e78;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .order-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .order-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .order-card h2 {
+            font-size: 1.5rem;
+            color: #4a0e78;
+            margin-bottom: 1rem;
+        }
+
+        .order-card .status {
+            font-size: 1.2rem reels;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .order-card .paid {
+            color: #3498db; /* Blue for Paid status */
+        }
+
+        .order-card .out-for-delivery {
+            color: #e67e22; /* Orange for Out for Delivery */
+        }
+
+        .order-card .delivered {
+            color: #27ae60; /* Green for Delivered */
+        }
+
+        .order-card p {
+            font-size: 1rem;
+            color: #333;
+            margin: 0.5rem 0;
+        }
+
+        .item-list {
+            margin-top: 1rem;
+            border-top: 1px solid #ddd;
+            padding-top: 1rem;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 1rem;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details p {
+            margin: 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-shop {
+            background-color: #0ABAB5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-shop:hover {
+            background-color: #088c87;
+        }
+
+        .btn-logout {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: darkred;
+        }
+        .item a{text-decoration: none;}
+        .continue-btn, .download-btn {
+            background-color: #400969;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin: 10px;
+        }
+        .continue-btn:hover, .download-btn:hover {
+            background-color: #2d0047;
+        }
+        .order-container a{text-decoration: none;}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-container" style="display: flex; align-items: center;">
+                <img src="/static/images/bag genie new.jpg" height="40" width="40" alt="Bag Genie Logo" class="logo-image"> 
+                <div class="logo" style="margin-left: 10px;">Bag Genie (Customer Dashboard)</div>
+            </div>
+            <div>
+                <a href="/profile" style="text-decoration: none; margin-right: 20px;">
+                    <button style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                        Profile
+                    </button>
+                </a>
+                <a href="/products" style="text-decoration: none; margin-right: 20px;">
+                    <button class="btn-shop">Shop</button>
+                </a>
+                <a href="/logout" class="logout-button" style="text-decoration: none;">
+                    <button class="btn-logout">Logout</button>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <h1>Welcome, {{ session.username.split('@')[0] | capitalize }}!</h1>
+        
+        <section class="order-container">
+            <h2 style="grid-column: 1 / -1; text-align: center; color: #4a0e78;">My Orders</h2>
+            {% if orders %}
+    {% for order in orders %}
+        <div class="order-card">
+            <h2>Order Id CM00{{ order.order_id }}</h2>
+            <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+            {% if order.status == 'Paid' %}
+                <p class="status paid">Order Confirmed (Awaiting Delivery)</p>
+            {% elif order.status == 'Out for Delivery' %}
+                <p class="status out-for-delivery">Out for Delivery</p>
+                <p><strong>Estimated Delivery Date:</strong> {{ order.max_date_arrival }}</p>
+            {% elif order.status == 'Delivered' %}
+                <p class="status delivered">Delivered</p>
+            {% endif %}
+            <div class="item-list">
+                <h3>Items:</h3>
+                {% for item in order.order_items %}
+                    <div class="item">
+                        {% if item.item_image %}
+                        <a href="{{ url_for('item_details', item_id=item['item_id']) }}">
+                            <img src="data:image/jpeg;base64,{{ item.item_image }}" alt="{{ item.item_name }}">
+                        </a>
+                        {% else %}
+                            <img src="/static/images/placeholder.jpg" alt="No Image">
+                        {% endif %}
+                        <div class="item-details">
+                            <a href="{{ url_for('item_details', item_id=item['item_id']) }}">
+                            <p><strong>{{ item.item_name }}</strong></p>
+                            <p>Qty: {{ item.quantity }} | Price: ₹{{ item.price }}</p></a>
+                        </div>
+                    </div>
+                
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('download_invoice_route', order_id=order.order_id) }}" class="download-btn mt-3">Download Invoice</a>
+        </div>
+        
+    {% endfor %}
+{% else %}
+    <p style="grid-column: 1 / -1; text-align: center; color: #666;">You have no orders yet.</p>
+{% endif %}
+        </section>
+    </div>
+
+    {% include "partials/footer.html" %}
+</body>
+</html>
